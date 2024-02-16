@@ -1,38 +1,31 @@
 #include "rrt.h"
+#include <iostream>
 
+namespace rrt{
 RRT::RRT(){
     startPos.x() = START_POS_X;
     startPos.y() = START_POS_Y;
     endPos.x() = END_POS_X;
     endPos.y() = END_POS_Y;
 
-    // Root added as new node, no parent
-    root = new Node;
-    root->parent = Null;
-    root->position = startPos;
-    lastNode = root;
-    nodes.push_back(root);
-
     // RRT Loop Control
     step_size = 3;
     max_iter = 3000;
-}
 
-void RRT::initialize(){
     root = new Node;
-    root->parent = Null;
+    root->parent = NULL;
     root->position = startPos;
     lastNode = root;
     nodes.push_back(root);
 }
 
 Node* RRT::randomSample(){
-    Node* ret;
+    Node* sample;
     Vector2f point(drand48() * WORLD_WIDTH, drand48() * WORLD_HEIGHT);
     if (point.x() >= 0 && point.x() <= WORLD_WIDTH && point.y() >= 0 && point.y() <= WORLD_HEIGHT){
-        ret = new Node;
-        ret->position = point;
-        return ret;
+        sample = new Node;
+        sample->position = point;
+        return sample;
     }
     return NULL;
 }
@@ -77,3 +70,49 @@ bool RRT::reached(){
     }
     return false;
 }
+}
+// int main()
+// {
+//     // rrt::RRT rrt;
+//     // rrt.initialize();
+
+//     // int max_iter = rrt.max_iter;
+
+//     // for (int i = 0; i < max_iter; i++)
+//     // {
+//     //     rrt::Node *q = rrt.randomSample();
+
+//     //     if (q){
+//     //         rrt::Node *qnear = rrt.find_neighbor(q->position);
+//     //         if (rrt.distance(q->position, qnear->position)>rrt.step_size){
+//     //             Vector2f qNew = rrt.extend(q, qnear);
+//     //             rrt::Node *qnew = new rrt::Node;
+//     //             qnew->position = qNew;
+
+//     //             rrt.add(qnear, qnew);
+
+//     //             // rrt::Node *qParent = qnear->parent;
+//     //             qnear->parent = qnew;
+//     //             qnew->children.push_back(qnear);
+//     //         };
+//     //     };
+
+//     //     if (rrt.reached()){
+//     //         cout << "End Position: " << rrt.endPos << endl;
+//     //         cout << "Last RRT Node: " << rrt.lastNode->position << endl;
+//     //         cout << "Destination Reached \n";
+//     //         break;
+//     //     };
+//     // }
+//     // Node *q;
+//     // if (rrt.reached()) {
+//     //     q = rrt.lastNode;  
+//     // }    else{
+//     //     q = rrt.find_neighbor(rrt.endPos);
+//     // }
+
+//     // while (q!= NULL){
+//     //     rrt.path.push_back(q);
+//     //     q = q->parent;
+//     // };
+// };

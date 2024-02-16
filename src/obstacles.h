@@ -9,13 +9,12 @@
 using namespace Eigen;
 using namespace std;
 
-class Obstacles
-{
-public:
-    /**Obstacles();
-    void addObstacle(Vector2f firstPoint, Vector2f secondPoint);
-    bool isSegmentInObstacle(Vector2f &p1, Vector2f &p2);
-    vector<pair<Vector2f, Vector2f> > obstacles;*/
+class Obstacles{
+    public: 
+        Obstacles();
+        void addObstacle(Vector2f firstPoint, Vector2f secondPoint);
+        bool checkRoute(Vector2f &p1, Vector2f &p2);
+        vector<pair<Vector2f, Vector2f> > obstacles;
 };
 
-#endif // OBSTACLES_H
+#endif

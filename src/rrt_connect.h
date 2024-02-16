@@ -13,7 +13,6 @@
 
 using namespace std;
 using namespace Eigen;
-namespace rrt{
 
 struct Node {
     vector<Node *> children;
@@ -21,9 +20,9 @@ struct Node {
     Vector2f position;
 };
 
-class RRT{
+class RRTC{
     public:
-        RRT();
+        RRTC();
         void initialize();
         Node* randomSample();
         Node* find_neighbor(Vector2f point);
@@ -40,5 +39,5 @@ class RRT{
         int max_iter;
         int step_size;
 };
-}
+
 # endif

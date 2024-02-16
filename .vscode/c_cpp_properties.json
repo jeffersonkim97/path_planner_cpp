@@ -1,15 +1,20 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            // "name": "Linux",
+            "name": "ROS",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/opt/ros/humble/include/**",
+                "/usr/include/**"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/clang-14",
+            // "compilerPath": "/usr/bin/clang-14",
+            "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
             "cppStandard": "c++14",
-            "intelliSenseMode": "linux-gcc-x86"
+            // "intelliSenseMode": "linux-gcc-x86"
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4

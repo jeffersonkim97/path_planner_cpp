@@ -13,11 +13,15 @@
 
 using namespace std;
 using namespace Eigen;
+namespace rrtc{
 
 struct Node {
     vector<Node *> children;
     Node *parent;
     Vector2f position;
+    float orientation;
+    double cost;
+    int counter;
 };
 
 class RRTC{
@@ -25,19 +29,22 @@ class RRTC{
         RRTC();
         void initialize();
         Node* randomSample();
-        Node* find_neighbor(Vector2f point);
+        Node* find_neighbor(Vector2f point, int counter);
         int distance(Vector2f &p, Vector2f &q);
+        void proximity(Vector2f point, float radius, vector<Node *>& out_nodes, int counter);
         Vector2f extend(Node *q, Node *qnear);
-        void add(Node *qnear, Node *qnew);
+        double Cost(Node *q);
+        double PathCost(Node *qFrom, Node *qTo);
+        void add(Node *qnear, Node *qnew, int counter);
         bool reached();
 
-        vector<Node *> nodes;
+        vector<Node *> nodesStart, nodesGoal;
         vector<Node *> path;
-        Node *root, *lastNode;
+        Node *rootStart, *rootGoal, *lastNode;
         Vector2f startPos, endPos;
 
         int max_iter;
         int step_size;
 };
-
+}
 # endif

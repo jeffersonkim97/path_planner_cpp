@@ -24,10 +24,18 @@ include_directories(include)
 
 add_executable(node_publisher src/node_publisher.cpp src/rrt.cpp)
 ament_target_dependencies(node_publisher rclcpp std_msgs visualization_msgs)
+
 install(TARGETS
   node_publisher
   DESTINATION lib/${PROJECT_NAME}
 )
+
+# Install launch files.
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

@@ -3,6 +3,7 @@
 
 namespace rrt{
 RRT::RRT(){
+    // obstacles = new Obstacles;
     startPos.x() = START_POS_X;
     startPos.y() = START_POS_Y;
     endPos.x() = END_POS_X;
@@ -35,6 +36,15 @@ int RRT::distance(Vector2f &p, Vector2f &q){
     return sqrt(powf(v.x(), 2) + powf(v.y(), 2));
 }
 
+void RRT::proximity(Vector2f point, float radius, vector<Node *>& out_nodes){
+    for(int i = 0; i < (int)nodes.size(); i++){
+        double dist = distance(point, nodes[i]->position);
+        if (dist < radius) {
+            out_nodes.push_back(nodes[i]);
+        }
+    }
+}
+
 Node* RRT::find_neighbor(Vector2f point){
     float minDist = 1e9;
     Node *closest = NULL;
@@ -55,6 +65,14 @@ Vector2f RRT::extend(Node *q, Node *qnear){
     intermediate = intermediate / intermediate.norm();
     Vector2f ret = from + step_size * intermediate;
     return ret;
+}
+
+double RRT::Cost(Node *q){
+    return q->cost;
+}
+
+double RRT::PathCost(Node *qFrom, Node *qTo){
+    return distance(qTo->position, qFrom->position);
 }
 
 void RRT::add(Node *qnear, Node *qnew){

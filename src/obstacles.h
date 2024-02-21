@@ -1,6 +1,8 @@
 #ifndef OBSTACLES_H
 #define OBSTACLES_H
 
+#include <QDebug>
+#include <QLine>
 #include <vector>
 #include <eigen3/Eigen/Dense>
 #include <assert.h>

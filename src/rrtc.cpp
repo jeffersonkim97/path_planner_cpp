@@ -19,11 +19,12 @@ RRTC::RRTC(){
     rootGoal = new Node;
     rootGoal->parent = NULL;
     rootGoal->position = endPos;
-    lastNode = rootStart;
+    lastStartNode = rootStart;
+    lastGoalNode = rootGoal;
     nodesStart.push_back(rootStart);
     nodesGoal.push_back(rootGoal);
     
-    int counter = 0;
+    // int counter = 0;
 }
 
 Node* RRTC::randomSample(){
@@ -96,20 +97,35 @@ double RRTC::PathCost(Node *qFrom, Node *qTo){
 void RRTC::add(Node *qnear, Node *qnew, int counter){
     qnew->parent = qnear;
     qnear->children.push_back(qnew);
-    vector<Node *> nodes;
+
     if (counter % 2 == 0){
-        nodes = nodesStart;
+        lastStartNode = qnew;
+        nodesStart.push_back(qnew);
     } else {
-        nodes = nodesGoal;
+        lastGoalNode = qnew;
+        nodesGoal.push_back(qnew);
     }
-    nodes.push_back(qnew);
-    lastNode = qnew;
 }
 
-bool RRTC::reached(){
-    if (distance(lastNode->position, endPos) < END_DIST_THRESHOLD){
-        return true;
+bool RRTC::reached(int counter){
+    // Fix: iteratively go through each vertex and find connection within end threshold
+    
+    if (counter % 2 == 0){
+        for (size_t i = 0; i < nodesGoal.size(); i++){
+            Node *goalVertex = nodesGoal[i];
+            if (distance(lastStartNode->position, goalVertex->position) < END_DIST_THRESHOLD){
+                return true;
+            }
+        }
+        return false;
+    } else {
+        for (size_t i = 0; i < nodesStart.size(); i++){
+            Node *startVertex = nodesStart[i];
+            if (distance(lastGoalNode->position, startVertex->position) < END_DIST_THRESHOLD){
+                return true;
+            }
+        }
+        return false;
     }
-    return false;
 }
 }

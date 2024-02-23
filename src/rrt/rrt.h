@@ -10,10 +10,11 @@
 #include "constants.h"
 #include <stdio.h>
 #include <string.h>
+// #include "obstacles.h"
 
 using namespace std;
 using namespace Eigen;
-namespace rrtc{
+namespace rrt{
 
 struct Node {
     vector<Node *> children;
@@ -21,26 +22,26 @@ struct Node {
     Vector2f position;
     float orientation;
     double cost;
-    int counter;
 };
 
-class RRTC{
+class RRT{
     public:
-        RRTC();
+        RRT();
         void initialize();
         Node* randomSample();
-        Node* find_neighbor(Vector2f point, int counter);
+        Node* find_neighbor(Vector2f point);
         int distance(Vector2f &p, Vector2f &q);
-        void proximity(Vector2f point, float radius, vector<Node *>& out_nodes, int counter);
+        void proximity(Vector2f point, float radius, vector<Node *>& out_nodes);
         Vector2f extend(Node *q, Node *qnear);
         double Cost(Node *q);
         double PathCost(Node *qFrom, Node *qTo);
-        void add(Node *qnear, Node *qnew, int counter);
-        bool reached(int counter);
+        void add(Node *qnear, Node *qnew);
+        bool reached();
 
-        vector<Node *> nodesStart, nodesGoal;
+        // Obstacles *obstacles;
+        vector<Node *> nodes;
         vector<Node *> path;
-        Node *rootStart, *rootGoal, *lastStartNode, *lastGoalNode;
+        Node *root, *lastNode;
         Vector2f startPos, endPos;
 
         int max_iter;

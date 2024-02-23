@@ -25,8 +25,21 @@ include_directories(include)
 add_executable(node_publisher src/node_publisher.cpp src/rrt.cpp)
 ament_target_dependencies(node_publisher rclcpp std_msgs visualization_msgs)
 
+add_executable(node_publisher_RRTC src/node_publisher_RRTC.cpp src/rrtc.cpp)
+ament_target_dependencies(node_publisher_RRTC rclcpp std_msgs visualization_msgs)
+
+add_executable(node_publisher_RRTC3D src/node_publisher_RRTC3D.cpp src/rrtc3D.cpp)
+ament_target_dependencies(node_publisher_RRTC3D rclcpp std_msgs visualization_msgs)
+
+
+# add_executable(node_publisher_RRTP src/node_publisher_RRTP.cpp src/rrtp.cpp)
+# ament_target_dependencies(node_publisher_RRTP rclcpp std_msgs visualization_msgs)
+
 install(TARGETS
   node_publisher
+  node_publisher_RRTC
+  node_publisher_RRTC3D
+  # node_publisher_RRTP
   DESTINATION lib/${PROJECT_NAME}
 )
 
